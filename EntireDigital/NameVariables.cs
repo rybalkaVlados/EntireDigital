@@ -12,6 +12,9 @@ namespace EntireDigital
         public const string EMAIL_ADMIN = "celladecummo-1094@yopmail.com";
         public const string PASSWORD_ADMIN = "Test123!";
 
+        public const string EMAIL_EDITOR = "weddehyttatt-6265@yopmail.com";
+        public const string PASSWORD_EDITOR = "Test123";
+
         public const string DEFAULT_TITLE = "EDP - News";
 
         public const string USERS = "Users";
@@ -27,7 +30,7 @@ namespace EntireDigital
         public const string IFRAME = "summernote-content_ifr";
 
         public const string TITLE_H1 = "Lorem ipsum dolor sit amet";
-        public const string  HOME_TITLE = "Lorem ipsum dolor sit amet";
+        public const string HOME_TITLE = "Lorem ipsum dolor sit amet";
         public const string ALT_TITLE = "Lorem ipsum dolor sit amet";
         public const string SUMMARY = "Lorem ipsum dolor sit amet";
 
@@ -47,7 +50,7 @@ namespace EntireDigital
 
         public const string SCRIPT = "var timeId=setInterval(function(){window.scrollY<document.body.scrollHeight-window.screen.availHeight?window.scrollTo(0,document.body.scrollHeight):(clearInterval(timeId),window.scrollTo(0,0))},500);";
 
-
+        public const int ZERO = 0;
 
 
     }

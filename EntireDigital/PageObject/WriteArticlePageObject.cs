@@ -43,9 +43,11 @@ namespace EntireDigital.PageObject
 
         private readonly By publishButton = By.CssSelector("div.col-md-12 a.btn");
         private readonly By confirmButton = By.Id("btnPublish");
+
+
         #endregion
 
-        #region AWebElements
+        #region IWebElements
         private IWebElement _titleH1Fielf => _webDriver.FindElement(titleH1Field);
         private IWebElement _homePageTitle => _webDriver.FindElement(homePageTitle);
         private IWebElement _altTitle => _webDriver.FindElement(altTitle);
@@ -75,9 +77,11 @@ namespace EntireDigital.PageObject
         private IWebElement _publishButton => _webDriver.FindElement(publishButton);
         private IWebElement _confirmButton => _webDriver.FindElement(confirmButton);
 
+
+
         #endregion
-       
-        
+
+
         private Random _random = new Random();
 
 
@@ -183,6 +187,8 @@ namespace EntireDigital.PageObject
 
             return this;
         }
+
+
 
 
     }

@@ -2,8 +2,6 @@ using EntireDigital.PageObject;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Reflection.Metadata;
 using System.Threading;
 
 namespace EntireDigital
@@ -19,25 +17,21 @@ namespace EntireDigital
             _webDriver = new ChromeDriver();
             _webDriver.Navigate().GoToUrl(NameVariables.URL);
             _webDriver.Manage().Window.Maximize();
-
-            var authPage = new AuthorizationPageObject(_webDriver);
-            authPage.LogIn(
-                NameVariables.EMAIL_ADMIN,
-                NameVariables.PASSWORD_ADMIN);
         }
 
         [Test]
-        public void GetTitle()
+        public void CheckTitle()
         {
+            new LogIn(_webDriver)
+                .LogInAdmin();
             Assert.AreEqual(_webDriver.Title, NameVariables.DEFAULT_TITLE);
-            Thread.Sleep(5000);
         }
 
         [Test]
         public void CreateTitle()
         {
-            var authSearching = new AuthorSearchingPageObject(_webDriver);
-            authSearching
+            new LogIn(_webDriver)
+                .LogInAdmin()
                 .CreateButton()
                 .CreateTitle(NameForCreateArticle.TITLE)
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_NERA)
@@ -74,20 +68,15 @@ namespace EntireDigital
             Thread.Sleep(5000);
         }
         [Test]
-        public void testQA()
+        public void CheckManagedTitles()
         {
-            _webDriver.Navigate().GoToUrl("https://stackoverrun.com/ru/q/5064559");
-            _webDriver.FindElement(By.XPath("//div[@id='41335111']/div/div/span[2]/i")).Click();
-            Thread.Sleep(3000);
-            var jse = (IJavaScriptExecutor)_webDriver;
+            new LogIn(_webDriver)
+                .LogInAdmin()
+                .GoToSummaryPage();
 
-            // The minified JavaScript to execute
-            const string script =
-                "var timeId=setInterval(function(){window.scrollY<document.body.scrollHeight-window.screen.availHeight?window.scrollTo(0,document.body.scrollHeight):(clearInterval(timeId),window.scrollTo(0,0))},500);";
-
-            // Start Scrolling
-            jse.ExecuteScript(script);
-            Thread.Sleep(10000);
+            string managedTitles = new SummaryPageObject(_webDriver)
+                .CheckStatistics();
+            Assert.AreNotEqual(managedTitles, NameForCreateArticle.ZERO);
         }
 
        
