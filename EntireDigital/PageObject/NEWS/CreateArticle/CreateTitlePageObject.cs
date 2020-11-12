@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace EntireDigital.PageObject
 {
-    class CreateTitleForm
+    class CreateTitlePageObject
     {
         private IWebDriver _webDriver;
 
@@ -16,6 +16,8 @@ namespace EntireDigital.PageObject
         private readonly By categoryField = By.Id("select2-CategoryId-container");
         private readonly By listCategory = By.ClassName("select2-results__option");
         private readonly By buttonAssignToMe = By.Id("btnAssignToMe");
+        private readonly By nameSite = By.CssSelector("div.col-md-12 strong.text-blue-project");
+        private readonly By buttonSaveAndAssign = By.Id("btnAssign");
 
         #endregion
 
@@ -24,14 +26,16 @@ namespace EntireDigital.PageObject
         private IWebElement _categoryField => _webDriver.FindElement(categoryField);
         private IReadOnlyCollection<IWebElement> _listCategory => _webDriver.FindElements(listCategory);
         private IWebElement _buttonAssignToMe => _webDriver.FindElement(buttonAssignToMe);
+        private IWebElement _nameSite => _webDriver.FindElement(nameSite);
+        private IWebElement _buttonSaveAndAssign => _webDriver.FindElement(buttonSaveAndAssign);
         #endregion
 
-        public CreateTitleForm(IWebDriver webDriver)
+        public CreateTitlePageObject(IWebDriver webDriver)
         {
             _webDriver = webDriver;
         }
 
-        public CreateTitleForm CreateTitle(string title)
+        public CreateTitlePageObject CreateTitle(string title)
         {
             Thread.Sleep(500);
             _titleFielf.SendKeys(title);
@@ -39,11 +43,13 @@ namespace EntireDigital.PageObject
             return this;
         }
 
-        public CreateTitleForm ChoiceElemCategory(string nameElem)
+        public CreateTitlePageObject ChoiceElemCategory(string nameElem)
         {
+            WaitUntil.WaitElement(_webDriver, categoryField);
             _categoryField.Click();
 
             var dropBox = _listCategory.First(x => x.Text == nameElem);
+            WaitUntil.WaitElement(_webDriver, listCategory);
             dropBox.Click();
 
             return this;
@@ -54,6 +60,22 @@ namespace EntireDigital.PageObject
             _buttonAssignToMe.Click();
             return new WriteArticlePageObject(_webDriver);
         }
+
+        public AssignTitlePageObject SaveAndAssign()
+        {
+            _buttonSaveAndAssign.Click();
+            return new AssignTitlePageObject(_webDriver);
+        }
+
+
+
+        public string GetEsteriBlog()
+        {
+            string name = _nameSite.Text;
+            return name;
+        }
+
+
 
 
 

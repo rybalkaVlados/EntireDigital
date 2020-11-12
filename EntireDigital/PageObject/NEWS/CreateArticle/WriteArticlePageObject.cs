@@ -41,8 +41,15 @@ namespace EntireDigital.PageObject
         private readonly By sourceName = By.Id("select2-SourceNameImg-container");
         private readonly By sourceNameList = By.ClassName("select2-results__option");
 
-        private readonly By publishButton = By.CssSelector("div.col-md-12 a.btn");
+        private readonly By publishButton = By.LinkText("Save and Publish");
+        private readonly By saveAndSendButton = By.LinkText("Save and Send");
+
         private readonly By confirmButton = By.Id("btnPublish");
+        private readonly By confirmSendButton = By.Id("btnSend");
+
+        private readonly By getArticleID = By.XPath("//div[@class='col-md-8']/span[2]/strong");
+        private readonly By btnSave = By.Id("btnSaveArticle");
+
 
 
         #endregion
@@ -75,7 +82,13 @@ namespace EntireDigital.PageObject
         private IReadOnlyCollection<IWebElement> _sourceNameList => _webDriver.FindElements(sourceNameList);
 
         private IWebElement _publishButton => _webDriver.FindElement(publishButton);
+        private IWebElement _saveAndSendButton => _webDriver.FindElement(saveAndSendButton);
+
         private IWebElement _confirmButton => _webDriver.FindElement(confirmButton);
+        private IWebElement _confirmSendButton => _webDriver.FindElement(confirmSendButton);
+
+        private IWebElement _getArticleID => _webDriver.FindElement(getArticleID);
+        private IWebElement _btnSave => _webDriver.FindElement(btnSave);
 
 
 
@@ -103,7 +116,7 @@ namespace EntireDigital.PageObject
         public WriteArticlePageObject FillIFrame(string iframeID)
         {
             var multiplied = string.Join(" ", Enumerable.Repeat(NameForCreateArticle.IFRAME_TEXT, 60).ToArray());
-         
+
             _webDriver.SwitchTo().Frame(iframeID);                     //start Iframe
             _iFrameText.SendKeys(multiplied);
             _webDriver.SwitchTo().DefaultContent();                    //finish Iframe
@@ -118,10 +131,10 @@ namespace EntireDigital.PageObject
             _metaDescription.SendKeys(metaDesc);
             _slug.Clear();
             _slug.SendKeys(slug);
-           
-            int randomNumber = _random.Next(0, 99);
+
+            int randomNumber = _random.Next(0, 9999999);
             _focusKeyPhrase.SendKeys(focusKey + randomNumber);
-            
+
             return this;
         }
 
@@ -149,7 +162,7 @@ namespace EntireDigital.PageObject
             _titleImage.SendKeys(title);
             _alternativeText.SendKeys(altText);
             _sourceURL.SendKeys(sourceURL);
-         
+
             return this;
         }
 
@@ -157,7 +170,7 @@ namespace EntireDigital.PageObject
         {
             _inputImage.SendKeys(imagePuth);
             _saveImgButton.Click();
-           
+
             return this;
         }
 
@@ -177,6 +190,17 @@ namespace EntireDigital.PageObject
             return this;
         }
 
+
+        public WriteArticlePageObject SaveAndSendArticle()
+        {
+            WaitUntil.WaitSomeInterval();
+            _saveAndSendButton.Click();
+
+            WaitUntil.WaitElement(_webDriver, confirmSendButton);
+            _confirmSendButton.Click();
+
+            return this;
+        }
         public WriteArticlePageObject PublishArticle()
         {
             WaitUntil.WaitSomeInterval();
@@ -188,12 +212,21 @@ namespace EntireDigital.PageObject
             return this;
         }
 
+        public string GetArticleID()
+        {
+            string articleID = _getArticleID.Text;
+            return articleID;
+        }
 
+        public WriteArticlePageObject SaveArticle()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            _btnSave.Click();
+            WaitUntil.WaitElement(_webDriver, OKButton);
+            _OKButton.Click();
+            return this;
+        }
 
 
     }
-
-
-
-    
 }

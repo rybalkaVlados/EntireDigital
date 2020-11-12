@@ -19,6 +19,7 @@ namespace EntireDigital
 
         public AuthorSearchingPageObject LogInAdmin()
         {
+            WaitUntil.WaitSomeInterval(1);
             var authPage = new AuthorizationPageObject(_webDriver);
             authPage.LogIn(
                 NameVariables.EMAIL_ADMIN,
@@ -28,6 +29,7 @@ namespace EntireDigital
 
         public AuthorSearchingPageObject LogInEditor()
         {
+            WaitUntil.WaitSomeInterval(1);
             var authPage = new AuthorizationPageObject(_webDriver);
             authPage.LogIn(
                 NameVariables.EMAIL_EDITOR,
