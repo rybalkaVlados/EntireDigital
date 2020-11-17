@@ -12,7 +12,7 @@ namespace EntireDigital.PageObject
 
 
         #region Locators
-        private readonly By inputSearch = By.XPath("//input[@type='search']");
+        private readonly By inputSearch = By.Id("FSearch");
         private readonly By btnApprove = By.XPath("//button[@title='Approve']");
         private readonly By btnConfirm = By.XPath("//button[text()='Confirm']");
         #endregion

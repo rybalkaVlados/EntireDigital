@@ -1,9 +1,5 @@
-﻿using NUnit.Framework;
+﻿
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace EntireDigital.PageObject
@@ -14,23 +10,24 @@ namespace EntireDigital.PageObject
 
         #region Locators
         private readonly By createButton = By.CssSelector("div.d-inline-block button.btn-shadow ");
-        private readonly By redEsteriBlogTest = By.XPath("//div[@class='page-title-actions']/div/div/ul/li[3]/a");
+        private readonly By redEsteriBlogTest = By.XPath("//div[@class='page-title-actions']/div/div/ul/li[4]/a");
 
         private readonly By summaryTab = By.XPath("//a[@title='Summary']");
         private readonly By draftsTab = By.XPath("//a[@title='Drafts']");
         private readonly By usersTab = By.XPath("//a[@title='Users']");
         private readonly By pendingTab = By.XPath("//a[@title='Users']/following-sibling::ul/li[2]/a");
+        private readonly By groupsTab = By.XPath("//a[@title='Groups']");
         #endregion
 
         #region IWebElements
         private IWebElement _createButton => _webDriver.FindElement(createButton);
         private IWebElement _redEsteriBlogTest => _webDriver.FindElement(redEsteriBlogTest);
-    
+
         private IWebElement _summaryTab => _webDriver.FindElement(summaryTab);
         private IWebElement _draftsTab => _webDriver.FindElement(draftsTab);
         private IWebElement _usersTab => _webDriver.FindElement(usersTab);
         private IWebElement _pendingTab => _webDriver.FindElement(pendingTab);
-
+        private IWebElement _groupsTab => _webDriver.FindElement(groupsTab);
         #endregion
 
         public AuthorSearchingPageObject(IWebDriver webDriver)
@@ -72,6 +69,13 @@ namespace EntireDigital.PageObject
             WaitUntil.WaitElement(_webDriver, pendingTab);
             _pendingTab.Click();
             return new PendingPageObject(_webDriver);
+        }
+
+        public GroupsPageObject GoToGroupsPage()
+        {
+            WaitUntil.WaitElement(_webDriver, groupsTab);
+            _groupsTab.Click();
+            return new GroupsPageObject(_webDriver);
         }
 
     }

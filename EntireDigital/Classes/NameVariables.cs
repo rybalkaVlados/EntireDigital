@@ -32,7 +32,9 @@ namespace EntireDigital
     {
         public const string TITLE = "Lorem ipsum dolor sit amet";
         public const string CATEGORY_NERA = "nera";
+        public const string CATEGORY_ECONOMIA = "economia";
         public const string CATEGORY_CRONACA = "Cronaca";
+        public const string CATEGORY_POLITICA = "politica";
         public const string IFRAME_TEXT = "Lorem ipsum dolor sit amet";
         public const string IFRAME = "summernote-content_ifr";
 
@@ -81,5 +83,15 @@ namespace EntireDigital
         public const string ADDRESS = "www.Leningrad";
         public const string ZIP_CODE = "1234";
         public const string MOBILE_PHONE = "1234567890";
+    }
+
+    public static class NameForCreteGroup
+    {
+        public const string NAME_GROUP = "Group";
+        public const string DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+        public const string NAME_ANACONDA = "anaconda anaconda";
+        public const string ZERO_USERS = " (0 users)";
+        public const string ONE_USER = " (1 users)";
+        public const string NO_FOUND_GROUP = "No matching records found";
     }
 }

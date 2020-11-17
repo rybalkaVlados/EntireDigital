@@ -176,6 +176,7 @@ namespace EntireDigital.PageObject
 
         public WriteArticlePageObject ChoiceSourceName(string nameElem)
         {
+            WaitUntil.WaitElement(_webDriver, sourceName);
             _sourceName.Click();
             var dropBox = _sourceNameList.First(x => x.Text == nameElem);
             dropBox.Click();

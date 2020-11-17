@@ -74,10 +74,5 @@ namespace EntireDigital.PageObject
             string name = _nameSite.Text;
             return name;
         }
-
-
-
-
-
     }
 }

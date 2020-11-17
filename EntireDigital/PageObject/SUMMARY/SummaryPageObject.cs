@@ -15,10 +15,13 @@ namespace EntireDigital.PageObject
         private readonly By sideBarNews = By.XPath("//a[@title='News']");
         private readonly By itemWaitingForYou = By.XPath("//a[@title='Waiting for You']");
         private readonly By itemPublished = By.XPath("//a[@title='Published']");
+        private readonly By itemAuthorSearching = By.XPath("//a[@title='Author Searching']");
 
         private readonly By btnWriteTestArticle = By.XPath("//div[@class='col-md-12']/div/div/a");
         private readonly By textEvaluating = By.XPath("//div[@class='col-md-12']/div/h5");
         private readonly By getFullName = By.XPath("//div[@class='app-header-right']/div[2]/div/div/div[2]/div");
+        
+
         #endregion
 
         #region AWebElements
@@ -27,6 +30,7 @@ namespace EntireDigital.PageObject
         private IWebElement _sideBarNews => _webDriver.FindElement(sideBarNews);
         private IWebElement _itemWaitingForYou => _webDriver.FindElement(itemWaitingForYou);
         private IWebElement _itemPublished => _webDriver.FindElement(itemPublished);
+        private IWebElement _itemAuthorSearching => _webDriver.FindElement(itemAuthorSearching);
 
         private IWebElement _btnWriteTestArticle => _webDriver.FindElement(btnWriteTestArticle);
         private IWebElement _textEvaluating => _webDriver.FindElement(textEvaluating);
@@ -47,6 +51,7 @@ namespace EntireDigital.PageObject
 
         public SummaryPageObject ClickOnTheNews()
         {
+            WaitUntil.WaitSomeInterval(1);
             _sideBarNews.Click();
             return this;
         }
@@ -84,6 +89,13 @@ namespace EntireDigital.PageObject
         {
             string text = _getFullName.Text;
             return text;
+        }
+
+        public AuthorSearchingPageObject GoToAuthorSearchingPage()
+        {
+            WaitUntil.WaitElement(_webDriver, itemAuthorSearching);
+            _itemAuthorSearching.Click();
+            return new AuthorSearchingPageObject(_webDriver);
         }
     }
 }
