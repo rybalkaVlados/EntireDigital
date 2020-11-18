@@ -27,40 +27,44 @@ namespace EntireDigital
         [Test]
         public void CreateTitle()
         {
-            new LogIn(_webDriver)
-                    .LogInAdmin()
-                    .CreateButton()
-                    .CreateTitle(NameForCreateArticle.TITLE)
-                    .ChoiceElemCategory(NameForCreateArticle.CATEGORY_NERA)
-                    .AssignToMe()
-                    .WriteArticleUpper(
-                    NameForCreateArticle.TITLE_H1,
-                    NameForCreateArticle.HOME_TITLE,
-                    NameForCreateArticle.ALT_TITLE,
-                    NameForCreateArticle.SUMMARY)
-                    .FillIFrame(NameForCreateArticle.IFRAME)
-                    .WriteArticleLower(
-                    NameForCreateArticle.META_TITLE,
-                    NameForCreateArticle.DESCRIPTION_TITLE,
-                    NameForCreateArticle.SLUG,
-                    NameForCreateArticle.FOCUS_KEY)
-                    .AddTag(NameForCreateArticle.FIRST_TAG)
-                    .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_TAG)
-                    .AddTag(NameForCreateArticle.SECOND_TAG)
-                    .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_TAG)
-                    .ChoiceSourceName(NameForCreateArticle.SOURCE_NAME_ELEM)
-                    .AddInfoImage(
-                    NameForCreateArticle.TITLE,
-                    NameForCreateArticle.ALT_TITLE,
-                    NameForCreateArticle.SOURCE_URL)
-                    .AddImage(NameForCreateArticle.PUTH_IMAGE)
-                    .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_IMAGE)
-                    .ScrollTopPage(NameForCreateArticle.SCRIPT)
-                    .PublishArticle();
+            var navigate = new Navigation(_webDriver);
+            var logIn = new LogIn(_webDriver);
+
+            logIn
+                .LogInAdmin()
+                .CreateButton()
+                .CreateTitle(NameForCreateArticle.TITLE)
+                .ChoiceElemCategory(NameForCreateArticle.CATEGORY_NERA)
+                .AssignToMe()
+                .WriteArticleUpper(
+                NameForCreateArticle.TITLE_H1,
+                NameForCreateArticle.HOME_TITLE,
+                NameForCreateArticle.ALT_TITLE,
+                NameForCreateArticle.SUMMARY)
+                .FillIFrame(NameForCreateArticle.IFRAME)
+                .WriteArticleLower(
+                NameForCreateArticle.META_TITLE,
+                NameForCreateArticle.DESCRIPTION_TITLE,
+                NameForCreateArticle.SLUG,
+                NameForCreateArticle.FOCUS_KEY)
+                .AddTag(NameForCreateArticle.FIRST_TAG)
+                .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_TAG)
+                .AddTag(NameForCreateArticle.SECOND_TAG)
+                .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_TAG)
+                .ChoiceSourceName(NameForCreateArticle.SOURCE_NAME_ELEM)
+                .AddInfoImage(
+                NameForCreateArticle.TITLE,
+                NameForCreateArticle.ALT_TITLE,
+                NameForCreateArticle.SOURCE_URL)
+                .AddImage(NameForCreateArticle.PUTH_IMAGE)
+                .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_IMAGE)
+                .ScrollTopPage(NameForCreateArticle.SCRIPT)
+                .PublishArticle();
             string expectedID = new WriteArticlePageObject(_webDriver).GetArticleID();
 
-            new SummaryPageObject(_webDriver)
-                .GoToPublished();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.PUBLISHED);
+
 
             string actualID = new WaitingForYouPageObject(_webDriver).CheckTitleID();
             Assert.AreEqual(expectedID, actualID);
@@ -70,9 +74,14 @@ namespace EntireDigital
         [Test]
         public void CheckManagedTitles()
         {
-            new LogIn(_webDriver)
-                .LogInAdmin()
-                .GoToSummaryPage();
+            var navigate = new Navigation(_webDriver);
+            var logIn = new LogIn(_webDriver);
+
+
+            logIn
+                .LogInAdmin();
+            navigate
+                .GoToPageNewsSection(NameSections.SUMMARY);
 
             string managedTitles = new SummaryPageObject(_webDriver)
                 .CheckStatistics();
@@ -91,6 +100,8 @@ namespace EntireDigital
             var newWindowPage = new EmptyWindow(_webDriver);
             var assignePage = new AssignTitlePageObject(_webDriver);
             var logInPage = new LogIn(_webDriver);
+            var pendingPage = new PendingPageObject(_webDriver);
+            var navigate = new Navigation(_webDriver);
 
 
             authPage
@@ -121,7 +132,8 @@ namespace EntireDigital
                 .MoveLastTab();
             yopMailSite
                 .CheckEmail()
-                .ValidateEmail(NameVariables.FRAME);
+                .GoToFrame(NameVariables.FRAME)
+                .ValidateEmail();
             signInPage
                 .MoveLastTab();
 
@@ -136,6 +148,7 @@ namespace EntireDigital
                 NameForCreateUser.ADDRESS,
                 NameForCreateUser.ZIP_CODE,
                 NameForCreateUser.MOBILE_PHONE)
+                .ClickSave()
                 .GoWriteTestArticle()
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_CRONACA)
                 .ClickStart()
@@ -164,9 +177,10 @@ namespace EntireDigital
                 .LogOut();
 
             logInPage
-                .LogInAdmin()
-                .GoToUsersPage()
-                .GoToPendingPage()
+                .LogInAdmin();
+            navigate
+                .GoToPageNewsSection(NameSections.USERS, NameUsersSection.PENDING);
+            pendingPage
                 .SearchTestArticle(fullName)
                 .ApproveTestArticle();
         }
@@ -177,20 +191,22 @@ namespace EntireDigital
             var detailsGroupPage = new DetailsGroupPageObject(_webDriver);
             var logInpage = new LogIn(_webDriver);
             var authSearchPage = new AuthorSearchingPageObject(_webDriver);
-            var summaryPage = new SummaryPageObject(_webDriver);
             var assignPage = new AssignTitlePageObject(_webDriver);
             var loginPage = new LogIn(_webDriver);
             var waitingPage = new WaitingForYouPageObject(_webDriver);
             var draftPage = new DraftsPageObject(_webDriver);
             var createGroupPage = new FormCreatePageObject(_webDriver);
             var groupsPage = new GroupsPageObject(_webDriver);
+            var navigate = new Navigation(_webDriver);
 
             string groupWithUser = createGroupPage.RandomNameGroup();
             string groupWithOutUser = createGroupPage.RandomNameGroup();
 
             logInpage
-                .LogInAdmin()
-                .GoToGroupsPage()
+                .LogInAdmin();
+            navigate
+                .GoToPageNewsSection(NameSections.GROUPS);
+            groupsPage
                 .CreateButton()
                 .CreateGroup(groupWithUser, NameForCreteGroup.DESCRIPTION)
                 .AddUsersInGroup(NameForCreteGroup.NAME_ANACONDA)
@@ -202,16 +218,18 @@ namespace EntireDigital
             detailsGroupPage
                 .ClickEdit()
                 .MakeGroupActive();
-            authSearchPage
-                .GoToGroupsPage()
+            navigate
+                .GoToPageNewsSection(NameSections.GROUPS);
+            groupsPage
                 .CreateButton()
                 .CreateGroup(groupWithOutUser, NameForCreteGroup.DESCRIPTION)
                 .ClickEdit()
                 .MakeGroupActive();
 
-            summaryPage
-                .ClickOnTheNews()
-                .GoToAuthorSearchingPage()
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.AUTHOR_SEARCHING);
+
+            authSearchPage
                 .CreateButton()
                 .CreateTitle(groupWithUser)
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_ECONOMIA)
@@ -225,9 +243,9 @@ namespace EntireDigital
             Assert.IsTrue(assignedEditor);
             string titleIdWith = assignPage.GetTitleID();
 
-            summaryPage
-                .ClickOnTheNews()
-                .GoToAuthorSearchingPage()
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.AUTHOR_SEARCHING);
+            authSearchPage
                 .CreateButton()
                 .CreateTitle(groupWithOutUser)
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_POLITICA)
@@ -244,9 +262,9 @@ namespace EntireDigital
                 .LogOut();
             loginPage
                 .LogInEditor();
-            summaryPage
-                .ClickOnTheNews()
-                .GotoWaitingForYou();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.WAITING_FOR_YOU);
+                
 
             string actualId = waitingPage.CheckTitleID();
             Assert.AreEqual(actualId, titleIdWith);
@@ -281,27 +299,29 @@ namespace EntireDigital
             assignPage
                 .LogOut();
             loginPage
-                .LogInAdmin()
-                .GoToDraftsPage();
+                .LogInAdmin();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.DRAFTS);
             Assert.AreEqual(actualId, titleIdWith);
             draftPage
                 .CheckArticle()
                 .PublishArticle();
-            summaryPage
-                .GoToPublished();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.PUBLISHED);
             Assert.AreEqual(actualId, titleIdWith);
-            authSearchPage
-                .GoToGroupsPage()
+            navigate
+                .GoToPageNewsSection(NameSections.GROUPS);
+            groupsPage
                 .SearchGroup(groupWithUser)
                 .ClickBtnShow()
                 .DeleteUser()
                 .ClickEdit()
                 .RemoveGroup()
                 .SearchGroup(groupWithUser);
-           
+
             string notFoundGroup = groupsPage.GetEmptyListGroup();
             Assert.AreEqual(notFoundGroup, NameForCreteGroup.NO_FOUND_GROUP);
-            
+
             groupsPage
                 .SearchGroup(groupWithOutUser)
                 .ClickBtnShow()
@@ -310,25 +330,6 @@ namespace EntireDigital
                 .SearchGroup(groupWithOutUser);
 
             Assert.AreEqual(notFoundGroup, NameForCreteGroup.NO_FOUND_GROUP);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
-
-
-
     }
-
-
 }

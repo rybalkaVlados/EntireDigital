@@ -83,6 +83,8 @@ namespace EntireDigital
         public const string ADDRESS = "www.Leningrad";
         public const string ZIP_CODE = "1234";
         public const string MOBILE_PHONE = "1234567890";
+        public const string PAYPAL_ACCOUNT = "Test QA Paypal Account";
+        public const string FISCAL_CODE = "Test QA Fiscal Code";
     }
 
     public static class NameForCreteGroup
@@ -93,5 +95,59 @@ namespace EntireDigital
         public const string ZERO_USERS = " (0 users)";
         public const string ONE_USER = " (1 users)";
         public const string NO_FOUND_GROUP = "No matching records found";
+    }
+
+
+    public static class NameSections
+    {
+        public const string NEWS = "News";
+        public const string USERS = "Users";
+        public const string CONTENTS = "Contents";
+        public const string CATEGORIES = "Categories/Tags";
+        public const string SUMMARY = "Summary";
+        public const string CASH_FLOWS = "Cash Flows";
+        public const string USERS_STATS = "Users Stats";
+        public const string GROUPS = "Groups";
+        public const string STAFF = "Staff";
+        public const string FEES = "Fees";
+        public const string PAYMENTS = "Payments";
+
+    }
+
+
+
+    public static class NameNewsSection
+    {
+        public const string AUTHOR_SEARCHING = "Author Searching";
+        public const string WRITING = "Writing";
+        public const string DRAFTS = "Drafts";
+        public const string PROOFREADER_SEARCHING = "Proofreader Searching";
+        public const string CORRECTING = "Correcting";
+        public const string READY_FOR_PUBLICATION = "Ready for Publication";
+        public const string PUBLISHED = "Published";
+        public const string WAITING_FOR_YOU = "Waiting for You";
+        public const string DELIVERED = "Delivered";
+    }
+
+    public static class NameUsersSection
+    {
+        public const string ACTIVE = "Active";
+        public const string PENDING = "Pending";
+        public const string WAITING_FOR = "Waiting For..";
+        public const string REJECTED = "Rejected";
+    }
+
+    public static class NameContentsSection
+    {
+        public const string PENDING = "Pending";
+        public const string TO_BE_DELIVERED = "To be delivered";
+        public const string DELIVERED = "Delivered";
+        public const string ECONOMICS = "Ecomomics";
+    }
+
+    public static class NameCategoriesSection
+    {
+        public const string CATEGORIES = "Categories";
+        public const string TAGS = "Tags";
     }
 }

@@ -14,7 +14,7 @@ namespace EntireDigital.PageObject
         private readonly By inputLastName = By.Id("LastName");
         private readonly By inputBirthCountry = By.Id("select2-BirthCountryId-container");
         private readonly By inputBirthCity = By.Id("BirthCity");
-        private readonly By inputBirthData = By.Id("BirthDate");
+        private readonly By inputBirthData = By.Name("BirthDate");
         private readonly By inputResidenceCity = By.Id("ResidenceCity");
         private readonly By inputResidenceAddress = By.Id("ResidenceAddress");
         private readonly By inputResidenceZipCode = By.Id("ResidenceZipCode");
@@ -55,12 +55,18 @@ namespace EntireDigital.PageObject
             return this;
         }
 
-        public SummaryPageObject CompleteDataLower(string residenceCity, string residenceAddress, string zipCode, string mobilePhone)
+        public CompleteProfileData CompleteDataLower(string residenceCity, string residenceAddress, string zipCode, string mobilePhone)
         {
             _inputResidenceCity.SendKeys(residenceCity);
             _inputResidenceAddress.SendKeys(residenceAddress);
             _inputResidenceZipCode.SendKeys(zipCode);
             _inputMobilePhone.SendKeys(mobilePhone);
+
+            return this;
+        }
+
+        public SummaryPageObject ClickSave()
+        {
             _btnSave.Click();
             return new SummaryPageObject(_webDriver);
         }

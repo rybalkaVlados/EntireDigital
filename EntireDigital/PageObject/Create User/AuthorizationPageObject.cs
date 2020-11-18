@@ -43,6 +43,7 @@ namespace EntireDigital.PageObject
 
         public AuthorSearchingPageObject LogIn(string email, string password)
         {
+            WaitUntil.WaitSomeInterval();
             _emailField.SendKeys(email);
             _password.SendKeys(password);
             _submitButton.Click();

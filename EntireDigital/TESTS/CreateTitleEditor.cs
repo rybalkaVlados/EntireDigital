@@ -53,7 +53,12 @@ namespace EntireDigital
         [Test]
         public void EditorAssign()
         {
-            var assignPage = new AssignTitlePageObject(_webDriver)
+            var assignPage = new AssignTitlePageObject(_webDriver);
+            var navigate = new Navigation(_webDriver);
+
+
+
+            assignPage
                 .ChoiceEditor(NameForCreateArticle.ANACONDA_EDITOR)
                 .ClickArrowRight();
 
@@ -77,10 +82,9 @@ namespace EntireDigital
             Assert.AreEqual(NameVariables.DEFAULT_TITLE_EDITOR, _webDriver.Title);
 
 
-            new SummaryPageObject(_webDriver)
-                .ClickOnTheNews()
-                .GotoWaitingForYou();
-            WaitUntil.WaitSomeInterval(6);
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.WAITING_FOR_YOU);
+            WaitUntil.WaitSomeInterval(8);
             string actualID = new WaitingForYouPageObject(_webDriver).CheckTitleID();
             Assert.AreEqual(expectedID, actualID);
         
@@ -115,14 +119,15 @@ namespace EntireDigital
             new AssignTitlePageObject(_webDriver)
                 .LogOut();
             new LogIn(_webDriver)
-                .LogInAdmin()
-                .GoToDraftsPage();
+                .LogInAdmin();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.DRAFTS);
             Assert.AreEqual(expectedID, actualID);
             new DraftsPageObject(_webDriver)
                 .CheckArticle()
                 .PublishArticle();
-            new SummaryPageObject(_webDriver)
-                .GoToPublished();
+            navigate
+                .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.PUBLISHED);
             Assert.AreEqual(expectedID, actualID);           
         }
 

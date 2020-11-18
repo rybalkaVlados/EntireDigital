@@ -26,7 +26,7 @@ namespace EntireDigital
             Task.Delay(TimeSpan.FromSeconds(seconds)).Wait();
         }
 
-        public static void WaitElement(IWebDriver webDriver, By locator, int seconds = 20)
+        public static void WaitElement(IWebDriver webDriver, By locator, int seconds = 30)
         {
             new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(locator));
             new WebDriverWait(webDriver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(locator));   

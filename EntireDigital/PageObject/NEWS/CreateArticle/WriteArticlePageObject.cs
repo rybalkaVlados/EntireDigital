@@ -210,6 +210,7 @@ namespace EntireDigital.PageObject
             WaitUntil.WaitElement(_webDriver, confirmButton);
             _confirmButton.Click();
 
+            WaitUntil.WaitSomeInterval(15);
             return this;
         }
 

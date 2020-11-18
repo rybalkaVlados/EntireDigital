@@ -14,7 +14,7 @@ namespace EntireDigital.PageObject
         #region Locators
 
         private readonly By btnGetStarted = By.CssSelector("div.register-row a.button ");
-        private readonly By inputEmail = By.Id("email");
+        private readonly By inputEmail = By.XPath("//input[@placeholder='Email']");
         private readonly By inputPassword = By.Id("password");
         private readonly By inputRepeatPassword = By.Id("password2");
         private readonly By checkBoxAccept = By.Id("checkTerms");

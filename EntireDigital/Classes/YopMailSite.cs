@@ -15,6 +15,7 @@ namespace EntireDigital.PageObject
         private readonly By btnCheckEmail = By.XPath("//input[@type='submit']");
         private readonly By iframeID = By.Id("ifmail");
         private readonly By btnValidate = By.XPath("//td[@align='center']//p[@style='text-align:center;']/a");
+        private readonly By getPassword = By.XPath("//table[@align='center']/tbody/tr/td/ul/li[2]");
 
 
 
@@ -23,6 +24,8 @@ namespace EntireDigital.PageObject
         private IWebElement _btnCheckEmail => _webDriver.FindElement(btnCheckEmail);
         private IWebElement _iframeID => _webDriver.FindElement(iframeID);
         private IWebElement _btnValidate => _webDriver.FindElement(btnValidate);
+        private IWebElement _getPassword => _webDriver.FindElement(getPassword);
+
 
         public YopMailSite(IWebDriver webDriver)
         {
@@ -49,14 +52,26 @@ namespace EntireDigital.PageObject
             return this;
         }
 
-        public CompleteProfileData ValidateEmail(string frame)
+        public YopMailSite GoToFrame(string frame)
         {
             WaitUntil.WaitSomeInterval(2);
             _webDriver.SwitchTo().Frame(frame);
+            return this;
+        }
+
+        public CompleteProfileData ValidateEmail()
+        {
             WaitUntil.WaitElement(_webDriver, btnValidate);
             _btnValidate.Click();
-            //_webDriver.SwitchTo().DefaultContent();
             return new CompleteProfileData(_webDriver);
+        }
+
+        public string GetPassword()
+        {
+            WaitUntil.WaitElement(_webDriver, getPassword);
+            string password = _getPassword.Text;
+            password = password.Substring(10);
+            return password;
         }
 
 
