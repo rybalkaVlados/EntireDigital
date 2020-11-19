@@ -24,7 +24,7 @@ namespace EntireDigital
         [Test]
         public void Authorization()
         {
-            new LogIn(_webDriver)
+            
                 .LogInAdmin();
             Assert.AreEqual(_webDriver.Title, NameVariables.DEFAULT_TITLE);
         }

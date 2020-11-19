@@ -1,36 +1,26 @@
 using EntireDigital.PageObject;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Linq;
-using System.Net;
-using System.Threading;
+
 
 namespace EntireDigital
 {
     [TestFixture]
-    public class GeneralTest : BaseTest
+    class GeneralTest : BaseTest
     {
-
-
-
+        
         [Test]
         public void CheckTitle()
         {
-            new LogIn(_webDriver)
+            authorizationPage
                 .LogInAdmin();
             Assert.AreEqual(_webDriver.Title, NameVariables.DEFAULT_TITLE);
         }
 
-
-
-
         [Test]
         public void CreateTitle()
         {
-            var navigate = new Navigation(_webDriver);
-            var logIn = new LogIn(_webDriver);
-
-            logIn
+            authorizationPage
                 .LogInAdmin()
                 .CreateButton()
                 .CreateTitle(NameForCreateArticle.TITLE)
@@ -60,13 +50,13 @@ namespace EntireDigital
                 .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_IMAGE)
                 .ScrollTopPage(NameForCreateArticle.SCRIPT)
                 .PublishArticle();
-            string expectedID = new WriteArticlePageObject(_webDriver).GetArticleID();
+            string expectedID = writeArticlePage.GetArticleID();
 
             navigate
                 .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.PUBLISHED);
 
 
-            string actualID = new WaitingForYouPageObject(_webDriver).CheckTitleID();
+            string actualID = waitingForYouPage.CheckTitleID();
             Assert.AreEqual(expectedID, actualID);
         }
 
@@ -74,37 +64,19 @@ namespace EntireDigital
         [Test]
         public void CheckManagedTitles()
         {
-            var navigate = new Navigation(_webDriver);
-            var logIn = new LogIn(_webDriver);
-
-
-            logIn
+            authorizationPage
                 .LogInAdmin();
             navigate
                 .GoToPageNewsSection(NameSections.SUMMARY);
 
-            string managedTitles = new SummaryPageObject(_webDriver)
-                .CheckStatistics();
+            string managedTitles = summaryPage.CheckStatistics();
             Assert.AreNotEqual(managedTitles, NameForCreateArticle.ZERO);
         }
 
         [Test]
         public void CreateEditor()
         {
-            var yopMailSite = new YopMailSite(_webDriver);
-            var signInPage = new SignInPageObject(_webDriver);
-            var testArticle = new WriteTestArticlePageObject(_webDriver);
-            var summaryPage = new SummaryPageObject(_webDriver);
-            var completeProfilePage = new CompleteProfileData(_webDriver);
-            var authPage = new AuthorizationPageObject(_webDriver);
-            var newWindowPage = new EmptyWindow(_webDriver);
-            var assignePage = new AssignTitlePageObject(_webDriver);
-            var logInPage = new LogIn(_webDriver);
-            var pendingPage = new PendingPageObject(_webDriver);
-            var navigate = new Navigation(_webDriver);
-
-
-            authPage
+            authorizationPage
                 .GoToSignIn()
                 .OpenNewTab()
                 .MoveLastTab();
@@ -173,10 +145,10 @@ namespace EntireDigital
 
             Assert.AreEqual(textEvaluating, NameForCreateArticle.TEXT_EVALUATING);
 
-            assignePage
+            assignPage
                 .LogOut();
 
-            logInPage
+            authorizationPage
                 .LogInAdmin();
             navigate
                 .GoToPageNewsSection(NameSections.USERS, NameUsersSection.PENDING);
@@ -188,21 +160,10 @@ namespace EntireDigital
         [Test]
         public void CreateGroup()
         {
-            var detailsGroupPage = new DetailsGroupPageObject(_webDriver);
-            var logInpage = new LogIn(_webDriver);
-            var authSearchPage = new AuthorSearchingPageObject(_webDriver);
-            var assignPage = new AssignTitlePageObject(_webDriver);
-            var loginPage = new LogIn(_webDriver);
-            var waitingPage = new WaitingForYouPageObject(_webDriver);
-            var draftPage = new DraftsPageObject(_webDriver);
-            var createGroupPage = new FormCreatePageObject(_webDriver);
-            var groupsPage = new GroupsPageObject(_webDriver);
-            var navigate = new Navigation(_webDriver);
-
             string groupWithUser = createGroupPage.RandomNameGroup();
             string groupWithOutUser = createGroupPage.RandomNameGroup();
 
-            logInpage
+            authorizationPage
                 .LogInAdmin();
             navigate
                 .GoToPageNewsSection(NameSections.GROUPS);
@@ -229,7 +190,7 @@ namespace EntireDigital
             navigate
                 .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.AUTHOR_SEARCHING);
 
-            authSearchPage
+            authorSearchingPage
                 .CreateButton()
                 .CreateTitle(groupWithUser)
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_ECONOMIA)
@@ -245,7 +206,7 @@ namespace EntireDigital
 
             navigate
                 .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.AUTHOR_SEARCHING);
-            authSearchPage
+            authorSearchingPage
                 .CreateButton()
                 .CreateTitle(groupWithOutUser)
                 .ChoiceElemCategory(NameForCreateArticle.CATEGORY_POLITICA)
@@ -260,17 +221,17 @@ namespace EntireDigital
 
             assignPage
                 .LogOut();
-            loginPage
+            authorizationPage
                 .LogInEditor();
             navigate
                 .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.WAITING_FOR_YOU);
-                
 
-            string actualId = waitingPage.CheckTitleID();
+
+            string actualId = waitingForYouPage.CheckTitleID();
             Assert.AreEqual(actualId, titleIdWith);
             Assert.AreNotEqual(actualId, titleIdWithOut);
 
-            waitingPage
+            waitingForYouPage
                 .GetItArticle()
                 .WriteArticleUpper(
                 NameForCreateArticle.TITLE_H1,
@@ -298,7 +259,7 @@ namespace EntireDigital
                 .SaveAndSendArticle();
             assignPage
                 .LogOut();
-            loginPage
+            authorizationPage
                 .LogInAdmin();
             navigate
                 .GoToPageNewsSection(NameSections.NEWS, NameNewsSection.DRAFTS);

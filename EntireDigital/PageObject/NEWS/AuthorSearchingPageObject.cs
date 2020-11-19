@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace EntireDigital.PageObject
 {
-    class AuthorSearchingPageObject
+    public class AuthorSearchingPageObject
     {
         private IWebDriver _webDriver;
 

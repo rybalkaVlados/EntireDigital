@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EntireDigital.PageObject
 {
-    class Navigation
+    public class Navigation
     {
-        private IWebDriver _webDriver;
-
         #region Locators
         private readonly By sideBarSummary = By.XPath("//a[@title='Summary']");
         private readonly By sideBarNews = By.XPath("//a[@title='News']");
@@ -27,7 +24,6 @@ namespace EntireDigital.PageObject
         private readonly By checkDisplayUsers = By.XPath("//a[@title='Users'][@aria-expanded]");
         private readonly By checkDisplayContents = By.XPath("//a[@title='Contents'][@aria-expanded]");
         private readonly By checkDisplayCategories = By.XPath("//a[@title='Categories/Tags'][@aria-expanded]");
-
 
         private readonly By listPages = By.XPath("//a[@style='font-weight:normal;']");
         #endregion
@@ -49,19 +45,20 @@ namespace EntireDigital.PageObject
         private IWebElement _checkDisplayUsers => _webDriver.FindElement(checkDisplayUsers);
         private IWebElement _checkDisplayContents => _webDriver.FindElement(checkDisplayContents);
         private IWebElement _checkDisplayCategories => _webDriver.FindElement(checkDisplayCategories);
-
-
-
+    
         private IReadOnlyCollection<IWebElement> _listPages => _webDriver.FindElements(listPages);
         #endregion
 
+        #region Constructor
+        private IWebDriver _webDriver;
 
         public Navigation(IWebDriver webDriver)
         {
             _webDriver = webDriver;
         }
+        #endregion
 
-        public bool CheckBool(IWebElement element)
+        private bool CheckVisibilityElement(IWebElement element)
         {
             try
             {
@@ -74,7 +71,7 @@ namespace EntireDigital.PageObject
             }
         }
 
-        private void CheckListSideBar(string namePage)
+        private void ChoiceElemSideBar(string namePage)
         {
             WaitUntil.WaitSomeInterval();
             var list = _listPages.First(x => x.Text == namePage);
@@ -88,16 +85,16 @@ namespace EntireDigital.PageObject
             {
                 try
                 {
-                    if (CheckBool(_checkDisplayNews) == true)
+                    if (CheckVisibilityElement(_checkDisplayNews) == true)
                     {
-                        CheckListSideBar(namePage);
+                        ChoiceElemSideBar(namePage);
                     }
                 }
                 catch
                 {
-                    _sideBarNews.Click();
                     WaitUntil.WaitSomeInterval();
-                    CheckListSideBar(namePage);
+                    _sideBarNews.Click();
+                    ChoiceElemSideBar(namePage);
                 }
 
             }
@@ -105,48 +102,48 @@ namespace EntireDigital.PageObject
             {
                 try
                 {
-                    if (CheckBool(_checkDisplayUsers) == true)
+                    if (CheckVisibilityElement(_checkDisplayUsers) == true)
                     {
-                        CheckListSideBar(namePage);
+                        ChoiceElemSideBar(namePage);
                     }
-                }    
+                }
                 catch
                 {
-                    _sideBarUsers.Click();
                     WaitUntil.WaitSomeInterval();
-                    CheckListSideBar(namePage);
+                    _sideBarUsers.Click();
+                    ChoiceElemSideBar(namePage);
                 }
             }
             else if (nameSection == NameSections.CONTENTS)
             {
                 try
                 {
-                    if (CheckBool(_checkDisplayContents) == true)
+                    if (CheckVisibilityElement(_checkDisplayContents) == true)
                     {
-                        CheckListSideBar(namePage);
+                        ChoiceElemSideBar(namePage);
                     }
                 }
                 catch
                 {
-                    _sideBarContents.Click();
                     WaitUntil.WaitSomeInterval();
-                    CheckListSideBar(namePage);
+                    _sideBarContents.Click();
+                    ChoiceElemSideBar(namePage);
                 }
             }
             else if (nameSection == NameSections.CATEGORIES)
             {
                 try
                 {
-                    if (CheckBool(_checkDisplayCategories) == true)
+                    if (CheckVisibilityElement(_checkDisplayCategories) == true)
                     {
-                        CheckListSideBar(namePage);
+                        ChoiceElemSideBar(namePage);
                     }
                 }
                 catch
                 {
-                    _sideBarCategories.Click();
                     WaitUntil.WaitSomeInterval();
-                    CheckListSideBar(namePage);
+                    _sideBarCategories.Click();
+                    ChoiceElemSideBar(namePage);
                 }
             }
             else if (nameSection == NameSections.SUMMARY)

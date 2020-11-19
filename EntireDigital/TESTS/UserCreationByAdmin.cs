@@ -8,43 +8,12 @@ using System.Text;
 
 namespace EntireDigital
 {
-    class UserCreationByAdmin
+    class UserCreationByAdmin : BaseTest
     {
-        protected IWebDriver _webDriver;
-
-        [OneTimeSetUp]
-        protected void SetUp()
-        {
-            _webDriver = new ChromeDriver();
-            _webDriver.Manage().Cookies.DeleteAllCookies();
-            _webDriver.Navigate().GoToUrl(NameVariables.URL);
-            _webDriver.Manage().Window.Maximize();
-            WaitUntil
-                .ShouldLocate(_webDriver, NameVariables.URL);
-        }
-
         [Test]
         public void UserCreationByAdministrator()
-        {
-            var logIn = new LogIn(_webDriver);
-            var navigate = new Navigation(_webDriver);
-            var yopMailSite = new YopMailSite(_webDriver);
-            var signInPage = new SignInPageObject(_webDriver);
-            var testArticle = new WriteTestArticlePageObject(_webDriver);
-            var summaryPage = new SummaryPageObject(_webDriver);
-            var completeProfilePage = new CompleteProfileData(_webDriver);
-            var authPage = new AuthorizationPageObject(_webDriver);
-            var newWindowPage = new EmptyWindow(_webDriver);
-            var assignePage = new AssignTitlePageObject(_webDriver);
-            var logInPage = new LogIn(_webDriver);
-            var pendingPage = new PendingPageObject(_webDriver);
-            var activePage = new ActivePageObject(_webDriver);
-            var formCreateUserPage = new FormCreateUser(_webDriver);
-            var userDetailsPage = new UserDetails(_webDriver);
-
-
-
-            logIn
+        { 
+            authorizationPage
                 .LogInAdmin();
             navigate
                 .GoToPageNewsSection(NameSections.USERS, NameUsersSection.ACTIVE);
@@ -58,7 +27,7 @@ namespace EntireDigital
                     NameForCreateUser.BIRTH_DATE);
             formCreateUserPage
                 .EnterNecessaryData(
-                    NameForCreateUser.PAYPAL_ACCOUNT, 
+                    NameForCreateUser.PAYPAL_ACCOUNT,
                     NameForCreateUser.FISCAL_CODE);
             completeProfilePage
                 .CompleteDataLower(
@@ -68,13 +37,11 @@ namespace EntireDigital
                     NameForCreateUser.MOBILE_PHONE);
             formCreateUserPage
                 .SelectCategories();
-            signInPage    
+            signInPage
                 .OpenNewTab()
                 .MoveLastTab();
-
             newWindowPage
                 .GoToURL(NameVariables.URL_YOP);
-
             yopMailSite
                 .GenerateRandomMail();
 
@@ -92,7 +59,6 @@ namespace EntireDigital
 
             userDetailsPage
                 .SendCredentials();
-          
             signInPage
                .MoveLastTab();
             yopMailSite
@@ -103,25 +69,9 @@ namespace EntireDigital
 
             signInPage
                 .MoveFirstTab();
-
-            assignePage
+            assignPage
                 .LogOut()
                 .LogIn(randomMail, getPassword);
-            WaitUntil.WaitSomeInterval(10);
-        }
-
-
-
-
-
-
-
-
-
-        [OneTimeTearDown]
-        protected void TearDown()
-        {
-            _webDriver.Quit();
         }
     }
 }

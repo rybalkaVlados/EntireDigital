@@ -5,26 +5,14 @@ using OpenQA.Selenium.Chrome;
 
 namespace EntireDigital
 {
-    class CreateArticleRepeat
+    class CreateArticleRepeat : BaseTest
     {
-        protected IWebDriver _webDriver;
-
-        [SetUp]
-        protected void SetUp()
-        {
-            _webDriver = new ChromeDriver();
-            _webDriver.Manage().Cookies.DeleteAllCookies();
-            _webDriver.Navigate().GoToUrl(NameVariables.URL);
-            WaitUntil
-                .ShouldLocate(_webDriver, NameVariables.URL);
-        }
-
         [Test]
-        public void CreateTitle()
+        public void CreateTitleRepeat()
         {
             for (int i = 0; i < 10; i++)
             {
-                new LogIn(_webDriver)
+                authorizationPage
                       .LogInAdmin()
                       .CreateButton()
                       .CreateTitle(NameForCreateArticle.TITLE)
@@ -54,16 +42,10 @@ namespace EntireDigital
                       .AssertPopUp(NameForCreateArticle.ER_AFTER_ADD_IMAGE)
                       .ScrollTopPage(NameForCreateArticle.SCRIPT)
                       .SaveArticle();
-                new AssignTitlePageObject(_webDriver).LogOut();
+                 assignPage
+                       .LogOut();
             }
         }
-
-        [TearDown]
-        protected void TearDown()
-        {
-            _webDriver.Quit();
-        }
-
     }
 }
 

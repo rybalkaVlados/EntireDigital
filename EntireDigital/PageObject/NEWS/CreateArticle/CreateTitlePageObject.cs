@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace EntireDigital.PageObject
 {
-    class CreateTitlePageObject
+    public class CreateTitlePageObject
     {
         private IWebDriver _webDriver;
 

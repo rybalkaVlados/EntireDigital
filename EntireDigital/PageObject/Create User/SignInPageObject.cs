@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace EntireDigital.PageObject
 {
-    class SignInPageObject
+    public class SignInPageObject
     {
         private IWebDriver _webDriver;
 

@@ -1,10 +1,6 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using System;
+﻿using OpenQA.Selenium;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace EntireDigital.PageObject
 {
@@ -62,8 +58,6 @@ namespace EntireDigital.PageObject
 
         public AssignTitlePageObject ChoiceEditor(string nameElem)
         {
-            
-            //var listEditors = _listAllEditors.First(x => x.Text == nameElem);
             WaitUntil.WaitElement(_webDriver, listAllEditors);
             _anacondaEditor.Click();
             return this;

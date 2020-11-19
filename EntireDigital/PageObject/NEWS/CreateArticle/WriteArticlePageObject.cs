@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace EntireDigital.PageObject
 {
-    class WriteArticlePageObject
+    public class WriteArticlePageObject
     {
         private IWebDriver _webDriver;
 
